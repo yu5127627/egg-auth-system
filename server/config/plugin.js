@@ -6,4 +6,12 @@ module.exports = {
   // static: {
   //   enable: true,
   // }
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize',
+  },
+  joi: {
+    enable: true,
+    package: 'egg-joi',
+  },
 };

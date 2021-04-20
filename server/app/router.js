@@ -1,9 +1,9 @@
 'use strict';
+const { readdirSync } = require('fs');
+const path = require('path');
+const ROUTES_DIR = './routes';
 
-/**
- * @param {Egg.Application} app - egg application
- */
 module.exports = app => {
-  const { router, controller } = app;
-  router.get('/', controller.home.index);
+  const routes = readdirSync(path.join(__dirname, ROUTES_DIR));
+  routes.filter(v => (v.includes('.js') ? require(`${ROUTES_DIR}/${v}`)(app) : null));
 };

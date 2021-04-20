@@ -1,3 +1,7 @@
 {
-  "extends": "eslint-config-egg"
+  "extends": "eslint-config-egg",
+  "rules":{
+    "no-unused-vars":"warn",
+    "strict":"off"
+  }
 }
