@@ -20,7 +20,7 @@ module.exports = app => {
     SysMenu.belongsToMany(app.model.SysRole, {
       through: 'sys_role_menu',
       foreignKey: 'menuId',
-    });
+    }, { timestamps: false });
   };
 
   return SysMenu;

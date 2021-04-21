@@ -24,7 +24,7 @@ module.exports = app => {
     SysRule.belongsToMany(app.model.SysRole, {
       through: 'sys_role_rule',
       foreignKey: 'ruleId',
-    });
+    }, { timestamps: false });
   };
 
   return SysRule;

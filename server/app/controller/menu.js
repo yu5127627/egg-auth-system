@@ -1,11 +1,10 @@
-'use strict';
+const BaseController = require('../modules/BaseController');
+const MODULE_KEY = 'menu';
 
-const { Controller } = require('egg');
-
-class MenuController extends Controller {
-  async index() {
-    const { ctx } = this;
-    ctx.body = 'hi, menu';
+class MenuController extends BaseController {
+  init() {
+    this.MODULE_KEY = MODULE_KEY;
+    this.setEntity(this.ctx.model.SysMenu);
   }
 }
 

@@ -2,7 +2,7 @@ module.exports = app => {
   const Joi = app.Joi;
 
   const create = Joi.object().keys({
-    name: Joi.string().required().error(new Error('角色名称必填')),
+    title: Joi.string().required().error(new Error('菜单名称必填')),
   });
 
   const index = Joi.object().keys({
@@ -11,12 +11,12 @@ module.exports = app => {
   });
 
   const update = Joi.object().keys({
-    id: Joi.number().required().error(new Error('角色id必填')),
-    name: Joi.string().required().error(new Error('角色名称必填')),
+    id: Joi.number().required().error(new Error('菜单id必填')),
+    title: Joi.string().required().error(new Error('菜单名称必填')),
   });
 
   const remove = Joi.object().keys({
-    id: Joi.number().required().error(new Error('角色id必填')),
+    id: Joi.number().required().error(new Error('菜单id必填')),
   });
 
   return {

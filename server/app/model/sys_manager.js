@@ -1,4 +1,4 @@
-'use strict';
+const { hashSync } = require('bcryptjs');
 
 module.exports = app => {
   const { STRING, INTEGER } = app.Sequelize;
@@ -10,9 +10,12 @@ module.exports = app => {
       allowNull: false,
     },
     password: {
-      type: STRING(32),
+      type: STRING(64),
       comment: '密码',
       allowNull: false,
+      set(val) {
+        this.setDataValue('password', hashSync(val));
+      },
     },
   }, {
     tableName: 'sys_manager',

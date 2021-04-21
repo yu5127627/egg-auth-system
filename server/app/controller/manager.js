@@ -1,11 +1,10 @@
-'use strict';
+const BaseController = require('../modules/BaseController');
+const MODULE_KEY = 'manager';
 
-const { Controller } = require('egg');
-
-class ManagerController extends Controller {
-  async index() {
-    const { ctx } = this;
-    ctx.body = 'hi, manager';
+class ManagerController extends BaseController {
+  init() {
+    this.MODULE_KEY = MODULE_KEY;
+    this.setEntity(this.ctx.model.SysManager);
   }
 }
 

@@ -3,13 +3,6 @@
 const { Service } = require('egg');
 
 class BaseService extends Service {
-  constructor(ctx) {
-    super(ctx);
-    this.init();
-  }
-
-  init() { }
-
   /**
    * 设置实体
    * @param entity
@@ -23,6 +16,7 @@ class BaseService extends Service {
   }
 
   async page(query) {
+    console.log(1);
     return await this.entity.findAndCountAll();
   }
 

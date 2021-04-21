@@ -20,12 +20,12 @@ module.exports = app => {
     SysRole.belongsToMany(app.model.SysMenu, {
       through: 'sys_role_menu',
       foreignKey: 'roleId',
-    });
+    }, { timestamps: false });
 
     SysRole.belongsToMany(app.model.SysRule, {
       through: 'sys_role_rule',
       foreignKey: 'roleId',
-    });
+    }, { timestamps: false });
   };
 
   return SysRole;

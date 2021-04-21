@@ -7,6 +7,7 @@
     "declarations": true
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "egg": "^2.15.1",
     "egg-joi": "^2.0.1",
     "egg-scripts": "^2.11.0",
