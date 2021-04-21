@@ -1,11 +1,12 @@
 # eggAuthSystem
 
 #### 介绍
+
 egg.js + vue 的权限管理系统
 
 #### 软件架构
-    基于 egg.js + mysql + vue 的权限管理系统
 
+    基于 egg.js + mysql + vue 的权限管理系统
 
 #### 安装教程
 
@@ -32,11 +33,11 @@ egg.js + vue 的权限管理系统
     - BaseService.js        // 自定义扩展的 service 模块
   - public      // 静态目录
   - routes      // 路由接口目录
-  - service(选用)     // 业务处理模块
-  - validator(选用)   // 数据校验目录
+  - service(可选)     // 业务处理模块
+  - validator(可选)   // 数据校验目录
 ```
 
-##### 接口定义模块(controller)
+###### 接口定义模块(controller)
 
 ```javascript
 # test.js
@@ -46,14 +47,15 @@ const MODULE_KEY = 'test';    // 与验证模块要使用的文件同名
 class ManagerController extends BaseController {
   init() {
     this.MODULE_KEY = MODULE_KEY;
-    this.setEntity(this.ctx.model.SysManager);    // 设置要使用的模型
+    this.setEntity(this.ctx.model.Test);    // 设置关联 mdoel
+    this.setService(this.service.test);    // 设置关联 service
   }
 }
 
 module.exports = ManagerController;
 ```
 
-##### 业务处理模块(service)
+###### 业务处理模块(service)
 
 ```javascript
 # test.js
@@ -65,7 +67,7 @@ class TestService extends BaseService {
 module.exports = TestService;
 ```
 
-##### 验证模块(validator)
+###### 验证模块(validator)
 
 ```javascript
 # test.js
@@ -108,9 +110,9 @@ module.exports = app => {
 };
 ```
 
-##### 路由模块(routes)
-    
-    **因为个人不是特别喜欢 egg 的 RESTful 规范，所以没有使用。**
+###### 路由模块(routes)
+
+    因为个人不是特别喜欢 egg 的 RESTful 规范，所以没有使用。
 
 ```javascript
 # test.js
