@@ -14,4 +14,8 @@ module.exports = {
     enable: true,
     package: 'egg-joi',
   },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
 };

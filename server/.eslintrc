@@ -1,7 +1,10 @@
 {
+  "root": true,
   "extends": "eslint-config-egg",
-  "rules":{
-    "no-unused-vars":"warn",
-    "strict":"off"
+  "rules": {
+    "no-unused-vars": "warn",
+    "strict": "off",
+    "array-bracket-spacing": "off",
+    "space-before-function-paren": "off"
   }
 }

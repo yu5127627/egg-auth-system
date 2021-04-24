@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = app => {
   app.beforeStart(async () => {
     if (app.config.env === 'local') {

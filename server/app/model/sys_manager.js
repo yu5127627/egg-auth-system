@@ -13,9 +13,19 @@ module.exports = app => {
       type: STRING(64),
       comment: '密码',
       allowNull: false,
-      set(val) {
+      set (val) {
         this.setDataValue('password', hashSync(val));
       },
+    },
+    nickname: {
+      type: STRING(30),
+      comment: '昵称',
+      allowNull: false,
+    },
+    avatar: {
+      type: STRING,
+      comment: '头像',
+      allowNull: false,
     },
   }, {
     tableName: 'sys_manager',
@@ -23,7 +33,7 @@ module.exports = app => {
     timestamps: true,
   });
 
-  SysManager.associate = function() {
+  SysManager.associate = function () {
     SysManager.belongsTo(app.model.SysRole, {
       foreignKey: 'roleId',
       targetKey: 'id',

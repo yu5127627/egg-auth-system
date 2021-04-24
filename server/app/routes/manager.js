@@ -1,9 +1,14 @@
 module.exports = app => {
-  const { router, controller } = app;
-  router.get('/api/manager', controller.manager.index);
-  router.get('/api/manager/list', controller.manager.list);
-  router.post('/api/manager', controller.manager.create);
-  router.put('/api/manager/:id', controller.manager.update);
-  router.delete('/api/manager/:id', controller.manager.remove);
-  router.get('/api/manager/:id', controller.manager.item);
+  const { router, controller: { manager } } = app;
+
+  router.get('/api/manager/info', manager.info);
+
+  /* ---------------------------- 分割线 ---------------------------------- */
+
+  router.get('/api/manager', manager.index);
+  router.get('/api/manager/list', manager.list);
+  router.post('/api/manager', manager.create);
+  router.put('/api/manager/:id', manager.update);
+  router.delete('/api/manager/:id', manager.remove);
+  router.get('/api/manager/:id', manager.item);
 };
