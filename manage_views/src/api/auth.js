@@ -11,7 +11,7 @@ export const login = (data) => {
 export const getInfo = () => {
   return request({
     url: "/manager/info",
-    method: "get",
+    method: "get"
   });
 };
 

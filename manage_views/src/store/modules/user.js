@@ -17,11 +17,11 @@ const mutations = {
     Object.assign(state, getDefaultState());
   },
   SET_TOKEN: (state, token) => {
-    setToken(token)
+    setToken(token);
     state.token = token;
   },
   RESET_TOKEN: (state) => {
-    removeToken()
+    removeToken();
     state.token = null;
   },
   SET_NAME: (state, name) => {
@@ -33,10 +33,10 @@ const mutations = {
 };
 
 const actions = {
-  async getInfo ({ commit }) {
+  async getInfo({ commit }) {
     const { result } = await getInfo();
-    commit('SET_NAME', result.nickname);
-    commit('SET_AVATAR', result.avatar);
+    commit("SET_NAME", result.nickname);
+    commit("SET_AVATAR", result.avatar);
   }
 };
 
