@@ -63,3 +63,39 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+// 自定义 css
+.mian-view {
+  padding: 20px 20px 0 20px;
+
+  .main-operate {
+    transition: 0.3s;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .main-toolbar {
+    border: 1px solid #ebeef5;
+    transition: 0.3s;
+    overflow: hidden;
+    padding: 18px 0 0;
+  }
+
+  .main-table-view {
+    margin-top: 20px;
+
+    .main-operate {
+      border: 1px solid #ebeef5;
+      border-bottom: none;
+      transition: 0.3s;
+      padding: 20px;
+    }
+
+    .el-pagination {
+      padding: 10px 0;
+    }
+  }
+}
+
+// 自定义 css

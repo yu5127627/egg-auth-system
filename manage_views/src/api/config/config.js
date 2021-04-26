@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Message } from "element-ui";
 import store from "@/store";
-import { delSessionStorage } from "@/utils/auth";
+import { removeToken } from "@/utils/auth";
 import qs from "qs";
 
 // create an axios instance
@@ -59,15 +59,8 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const { message, code } = response.data;
-
-    if (code && code === 2001 || code === 2003 || code === 2010 || code === 2011 || code === 2012 || code === 2002) {
-      Message({
-        message: message,
-        type: "success",
-        duration: 5 * 1000
-      });
-    } else if (code && code === 2004) {
+    const { result: { message, code } } = response.data;
+    if (code && code > 201) {
       Message({
         message: message,
         type: "error",
@@ -114,8 +107,8 @@ service.interceptors.response.use(
     let message = "";
     switch (statusCode) {
       case 401:
-        message = "认证失败，请重新登录！";
-        delSessionStorage("token");
+        message = error.response.data.message || "认证失败，请重新登录！";
+        removeToken();
         break;
       case 404:
         message = "接口地址错误！";

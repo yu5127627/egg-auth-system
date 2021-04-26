@@ -14,6 +14,8 @@
 
         <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
 
+        <refresh-page class="right-menu-item hover-effect"></refresh-page>
+
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
@@ -23,7 +25,7 @@
 
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -58,12 +60,14 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import Screenfull from "@/components/Screenfull";
+import RefreshPage from "@/components/RefreshPage";
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    Screenfull
+    Screenfull,
+    RefreshPage
   },
   computed: {
     ...mapGetters(["sidebar", "avatar", "device"])
@@ -134,6 +138,7 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
+      margin-left: 10px;
 
       .avatar-wrapper {
         margin-top: 5px;

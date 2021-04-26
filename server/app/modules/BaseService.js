@@ -7,24 +7,23 @@ class BaseService extends Service {
    * 设置实体
    * @param entity
    */
-  setEntity(entity) {
+  setEntity (entity) {
     this.entity = entity;
   }
 
-  async create(body) {
+  async create (body) {
     return await this.entity.create(body);
   }
 
-  async page(query) {
-    console.log(1);
-    return await this.entity.findAndCountAll();
+  async page (where, option) {
+    return await this.entity.findAndCountAll({ where, ...option });
   }
 
-  async list() {
+  async list () {
     return await this.entity.findAll();
   }
 
-  async update(id, body) {
+  async update (id, body) {
     return await this.entity.update(body, { where: { id } });
   }
 }

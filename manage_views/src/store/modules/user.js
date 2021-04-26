@@ -1,6 +1,6 @@
-import { login, logout, getInfo } from "@/api/auth";
+import { getInfo } from "@/api/auth";
 import { getToken, setToken, removeToken } from "@/utils/auth";
-import { resetRouter } from "@/router";
+import router from "@/router";
 
 const getDefaultState = () => {
   return {
@@ -33,10 +33,15 @@ const mutations = {
 };
 
 const actions = {
-  async getInfo({ commit }) {
-    const { result } = await getInfo();
-    commit("SET_NAME", result.nickname);
-    commit("SET_AVATAR", result.avatar);
+  async getInfo ({ commit }) {
+    const { code, result } = await getInfo();
+    if (code === 200) {
+      commit("SET_NAME", result.nickname);
+      commit("SET_AVATAR", result.avatar);
+    } else {
+      commit("RESET_TOKEN");
+      router.push({ path: `/login?redirect=${router.currentRoute.path}` });
+    }
   }
 };
 

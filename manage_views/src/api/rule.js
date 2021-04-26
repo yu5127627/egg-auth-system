@@ -8,9 +8,10 @@ export const login = (data) => {
   });
 };
 
-export const getInfo = () => {
+export const getList = (params) => {
   return request({
-    url: "/manager/info",
-    method: "get"
+    url: "/rule",
+    method: "get",
+    params
   });
 };

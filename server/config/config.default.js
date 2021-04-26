@@ -36,7 +36,7 @@ module.exports = appInfo => {
     database: 'egg_auth',
     username: 'root',
     password: '123456',
-    logging: false,
+    logging: true,
     timezone: '+08:00',
     define: {
       underscored: false,
