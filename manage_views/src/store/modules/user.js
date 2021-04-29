@@ -33,7 +33,7 @@ const mutations = {
 };
 
 const actions = {
-  async getInfo ({ commit }) {
+  async getInfo({ commit }) {
     const { code, result } = await getInfo();
     if (code === 200) {
       commit("SET_NAME", result.nickname);

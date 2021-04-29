@@ -9,6 +9,11 @@ module.exports = app => {
       comment: '名称',
       allowNull: false,
     },
+    desc: {
+      type: STRING,
+      comment: '角色介绍',
+      allowNull: false,
+    },
   }, {
     tableName: 'sys_role',
     freezeTableName: true,

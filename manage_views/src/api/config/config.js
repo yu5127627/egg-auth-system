@@ -59,7 +59,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const { result: { message, code } } = response.data;
+    const { result: { message, code }} = response.data;
     if (code && code > 201) {
       Message({
         message: message,

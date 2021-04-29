@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -36,7 +38,13 @@ module.exports = appInfo => {
     database: 'egg_auth',
     username: 'root',
     password: '123456',
-    logging: true,
+    logging: msg => {
+      const sqlLog = path.join(__dirname, '../logs/mysql.dev.sql');
+      if (!fs.existsSync(sqlLog)) {
+        fs.writeFileSync(sqlLog, '', 'utf8');
+      }
+      fs.appendFileSync(sqlLog, '\n' + msg, 'utf8');
+    },
     timezone: '+08:00',
     define: {
       underscored: false,

@@ -36,6 +36,13 @@
       <el-table :data="list" border style="width: 100%" @selection-change="(selection)=>{selectList = selection.map(item=>item.id)}">
         <el-table-column type="selection" />
         <el-table-column prop="id" label="ID" width="50px" align="center" />
+        <el-table-column prop="name" label="角色名称" align="center" />
+        <el-table-column prop="desc" label="描述" align="center" />
+        <el-table-column prop="createdAt" label="创建时间" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.createdAt|moment('YYYY-MM-DD HH:mm:ss') }}
+          </template>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click="()=>{dialog.show=true;dialogForm = scope.row;}">编辑</el-button>
@@ -76,7 +83,7 @@
 </template>
 
 <script>
-import { getList } from "@/api/rule";
+import { getList } from "@/api/role";
 export default {
   name: "",
   data() {

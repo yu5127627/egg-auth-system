@@ -1,6 +1,6 @@
 import Vue from "vue";
 import "normalize.css/normalize.css"; // A modern alternative to CSS resets
-
+import moment from "moment";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 
@@ -25,6 +25,10 @@ import "@/permission"; // permission control
 //   const { mockXHR } = require('../mock')
 //   mockXHR()
 // }
+
+Vue.filter("moment", function(dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
+  return moment(dataStr).format(pattern);
+});
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
