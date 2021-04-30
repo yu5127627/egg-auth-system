@@ -41,6 +41,12 @@ module.exports = app => {
       comment: '组件路径',
       allowNull: false,
     },
+    sort: {
+      type: INTEGER,
+      comment: '排序',
+      allowNull: false,
+      defaultValue: 1000,
+    },
     pid: {
       type: INTEGER,
       comment: '父菜单',

@@ -12,7 +12,6 @@ module.exports = app => {
     desc: {
       type: STRING,
       comment: '角色介绍',
-      allowNull: false,
     },
   }, {
     tableName: 'sys_role',
