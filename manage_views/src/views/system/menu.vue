@@ -64,33 +64,12 @@
 
     <!-- 新增/编辑 弹出框 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialog.show">
-      <el-form :model="dialogForm" :rules="dialog.rules" label-width="100px" inline>
+      <el-form :model="dialogForm" :rules="dialog.rules" label-width="90px" inline>
         <el-form-item label="菜单类型" prop="type">
-          <el-radio-group v-model="dialogForm.type">
+          <el-radio-group v-model="dialogForm.type" size="mini">
             <el-radio-button label="0">目录</el-radio-button>
             <el-radio-button label="1">菜单</el-radio-button>
           </el-radio-group>
-        </el-form-item>
-        <el-form-item label="外链菜单">
-          <el-radio-group v-model="dialogForm.islink">
-            <el-radio-button label="1">是</el-radio-button>
-            <el-radio-button label="0">否</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="缓存菜单">
-          <el-radio-group v-model="dialogForm.cache">
-            <el-radio-button label="1">是</el-radio-button>
-            <el-radio-button label="0">否</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="菜单可见">
-          <el-radio-group v-model="dialogForm.show">
-            <el-radio-button label="1">是</el-radio-button>
-            <el-radio-button label="0">否</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="菜单名称" prop="title">
-          <el-input v-model="dialogForm.title" />
         </el-form-item>
         <el-form-item label="菜单图标">
           <el-popover
@@ -99,30 +78,53 @@
             trigger="click"
             @show="$refs['iconSelect'].reset()"
           >
-            <!-- <icon-select ref="iconSelect" @selected="selected" /> -->
-            <el-input slot="reference" v-model="dialogForm.icon" placeholder="点击选择图标" readonly>
-              <svg-icon v-if="dialogForm.icon" slot="prefix" :icon-class="dialogForm.icon" />
+            <icon-select ref="iconSelect" @selected="selected" />
+            <el-input slot="reference" v-model="dialogForm.icon" placeholder="点击选择图标" readonly style="width:450px;">
+              <svg-icon v-if="dialogForm.icon" slot="prefix" :icon-class="dialogForm.icon" class="el-input__icon" style="height: 32px;width: 16px;" />
               <i v-else slot="prefix" class="el-icon-search el-input__icon" />
             </el-input>
           </el-popover>
         </el-form-item>
+        <el-form-item label="外链菜单">
+          <el-radio-group v-model="dialogForm.islink" size="mini">
+            <el-radio-button label="1">是</el-radio-button>
+            <el-radio-button label="0">否</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="缓存菜单">
+          <el-radio-group v-model="dialogForm.cache" size="mini">
+            <el-radio-button label="1">是</el-radio-button>
+            <el-radio-button label="0">否</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="菜单可见">
+          <el-radio-group v-model="dialogForm.show" size="mini">
+            <el-radio-button label="1">是</el-radio-button>
+            <el-radio-button label="0">否</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="菜单名称" prop="title">
+          <el-input v-model="dialogForm.title" />
+        </el-form-item>
         <el-form-item label="菜单地址" prop="path">
           <el-input v-model="dialogForm.path" />
-        </el-form-item>
-        <el-form-item label="菜单排序">
-          <el-input-number v-model="dialogForm.sort" :min="1" label="描述文字" />
         </el-form-item>
         <el-form-item label="组件名称" prop="name">
           <el-input v-model="dialogForm.name" placeholder="组件内的name" />
         </el-form-item>
+        <el-form-item label="菜单排序">
+          <el-input-number v-model="dialogForm.sort" :min="1" label="描述文字" />
+        </el-form-item>
         <el-form-item label="组件路径" prop="src">
           <el-input v-model="dialogForm.src" placeholder="组件的文件路径" />
         </el-form-item>
-        <el-form-item label="活动区域" prop="">
-          <el-select v-model="dialogForm.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai" />
-            <el-option label="区域二" value="beijing" />
-          </el-select>
+        <el-form-item label="所属目录" prop="">
+          <treeselect
+            v-model="dialogForm.pid"
+            :options="list"
+            style="width: 450px;"
+            placeholder="所属目录"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -134,18 +136,20 @@
 </template>
 
 <script>
-// import IconSelect from "@/components/IconSelect";
+import IconSelect from "@/components/IconSelect";
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { getAllList } from "@/api/menu";
 export default {
   name: "Menu",
   components: {
-    // IconSelect
+    IconSelect, Treeselect
   },
   data() {
     return {
       dialogForm: {
         type: 0, icon: "eye", islink: 0, cache: 0, show: 1, title: "", name: "",
-        path: "", sort: 999, src: ""
+        path: "", sort: 999, src: "", pid: ""
       },
       dialog: {
         show: false, title: null,

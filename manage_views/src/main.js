@@ -10,7 +10,7 @@ import App from "./App";
 import store from "./store";
 import router from "./router";
 
-import "@/icons"; // icon
+import "@/assets/icons"; // icon
 import "@/permission"; // permission control
 
 /**
@@ -34,7 +34,7 @@ Vue.filter("moment", function(dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI, {
-  size: "medium"
+  size: "small"
 });
 
 Vue.config.productionTip = false;
