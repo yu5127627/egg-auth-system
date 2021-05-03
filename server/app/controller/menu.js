@@ -1,5 +1,6 @@
 const BaseController = require('../modules/BaseController');
 const MODULE_KEY = 'menu';
+const { Op } = require('sequelize');
 
 class MenuController extends BaseController {
   init() {

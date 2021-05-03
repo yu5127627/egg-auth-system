@@ -22,30 +22,42 @@ const mergeMenus = (menu) => {
   const child = [];
   menu.forEach(item => {
     if (item.pid === 0) {
-      pmenu.push({
-        id: item.id,
-        // 父级菜单需要加根标识
-        path: "/" + item.path,
-        component: Layout,
-        hidden: !item.shownav,
-        meta: {
-          title: item.title,
-          icon: item.icon,
-          noCache: !item.keepalive
-        }
-      });
+      if (item.islink) {
+        pmenu.push({
+          id: item.id,
+          path: item.url,
+          component: Layout,
+          meta: {
+            title: item.title,
+            icon: item.icon
+          }
+        });
+      } else {
+        pmenu.push({
+          id: item.id,
+          path: item.url,
+          component: Layout,
+          hidden: !item.show,
+          alwaysShow: true,
+          meta: {
+            title: item.title,
+            icon: item.icon,
+            noCache: !item.cache
+          }
+        });
+      }
     } else {
       child.push({
         id: item.id,
         pid: item.pid,
         name: item.name,
-        path: item.path,
-        component: resolve => require([`@/views/${item.router}`], resolve),
-        hidden: !item.shownav,
+        path: item.url,
+        hidden: !item.show,
+        component: resolve => require([`@/views${item.path}`], resolve),
         meta: {
           title: item.title,
           icon: item.icon,
-          noCache: !item.keepalive
+          noCache: !item.cache
         }
       });
     }
@@ -56,6 +68,7 @@ const mergeMenus = (menu) => {
       item.children = children;
     }
   });
+  pmenu.push({ path: "*", redirect: "/404", hidden: true });
   return pmenu;
 };
 
@@ -68,7 +81,6 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes;
     state.routes = constantRoutes.concat(routes);
-    // state.routes = constantRoutes;
   }
 };
 
@@ -76,7 +88,6 @@ const actions = {
   async asyncMenus({ commit }) {
     const { result } = await getAllList();
     const routes = mergeMenus(result);
-    routes.push({ path: "*", redirect: "/404", hidden: true });
     commit("SET_ROUTES", routes);
     return routes;
   }

@@ -31,11 +31,14 @@ class BaseController extends Controller {
   }
 
   // 创建一个 model 实例
-  async create () {
+  async create() {
+    let result;
     if (this.app.validator[this.MODULE_KEY] && this.app.validator[this.MODULE_KEY].create) {
-      this.ctx.validate(this.app.validator[this.MODULE_KEY].create, this.ctx.request.body, { stripUnknown: true });
+      const model = this.ctx.validate(this.app.validator[this.MODULE_KEY].create, this.ctx.request.body, { stripUnknown: true });
+      result = await this.OpService.create(model.value);
+    } else {
+      result = await this.OpService.create(this.ctx.request.body);
     }
-    const result = await this.OpService.create(this.ctx.request.body);
     this.ctx.resBody({ result });
   }
 
@@ -71,20 +74,26 @@ class BaseController extends Controller {
   }
 
   // 更新
-  async update () {
+  async update() {
     if (this.app.validator[this.MODULE_KEY] && this.app.validator[this.MODULE_KEY].update) {
-      this.ctx.validate(this.app.validator[this.MODULE_KEY].update, { ...this.ctx.request.body, id: this.ctx.params.id }, { stripUnknown: true });
+      const { value: { id, ...result } } = this.ctx.validate(this.app.validator[this.MODULE_KEY].update, { ...this.ctx.request.body, id: this.ctx.params.id }, { stripUnknown: true });
+      await this.OpService.update(id, result);
+    } else {
+      const { id, ...result } = this.ctx.request.body;
+      await this.OpService.update(this.ctx.params.id, result);
     }
-    await this.OpService.update(this.ctx.params.id, this.ctx.request.body);
     this.ctx.resBody();
   }
 
   // 删除
   async remove () {
     if (this.app.validator[this.MODULE_KEY] && this.app.validator[this.MODULE_KEY].remove) {
-      this.ctx.validate(this.app.validator[this.MODULE_KEY].remove, { id: this.ctx.params.id }, { stripUnknown: true });
+      const { value: { ids } } = this.ctx.validate(this.app.validator[this.MODULE_KEY].remove, { ids: this.ctx.request.body.ids }, { stripUnknown: true });
+      await this.entity.destroy({ where: { id: ids } });
+    } else {
+      await this.entity.destroy({ where: { id: this.ctx.request.body.ids } });
+
     }
-    await this.entity.destroy({ where: { id: this.ctx.params.id } });
     this.ctx.resBody();
   }
 }

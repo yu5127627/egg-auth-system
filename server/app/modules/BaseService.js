@@ -19,8 +19,11 @@ class BaseService extends Service {
     return await this.entity.findAndCountAll({ where, ...option });
   }
 
-  async list () {
-    return await this.entity.findAll();
+  async list(where, option) {
+    const filter = where ? { where } : {};
+    option ? Object.assign(filter, option) : null;
+    console.log(filter);
+    return await this.entity.findAll(filter);
   }
 
   async update (id, body) {
