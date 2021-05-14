@@ -6,7 +6,7 @@
         <el-button
           type="primary"
           icon="el-icon-circle-plus-outline"
-          @click="openCreate"
+          @click="openDialog"
         >新增</el-button>
         <el-button type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
       </div>
@@ -61,8 +61,8 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" @click="openUpdate(scope.row)" />
-            <el-button type="danger" icon="el-icon-delete" @click="handleRemove(scope.row)" />
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -184,12 +184,12 @@ export default {
   computed: { dialogTitle() { return this.dialogForm.id ? "编辑" : "创建"; } },
   async created() { await this.fetchData(); },
   methods: {
-    openCreate() {
-      this.dialogForm = JSON.parse(defaultForm);
-      this.dialog.show = true;
-    },
-    openUpdate(row) {
-      this.dialogForm = row;
+    openDialog(row) {
+      if (row.id) {
+        this.dialogForm = row;
+      } else {
+        this.dialogForm = JSON.parse(defaultForm);
+      }
       this.dialog.show = true;
     },
     async handleSubmit() {
@@ -255,14 +255,8 @@ export default {
       });
       return children;
     },
-    handleCreate() {},
     handleRemove(row) {
-      let ids;
-      if (row.id) {
-        ids = [row.id];
-      } else {
-        ids = this.selectList;
-      }
+      const ids = row.id ? [row.id] : this.selectList;
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -278,9 +272,6 @@ export default {
     },
     handleSearch() {
       console.log(this.listQuery);
-    },
-    handleUpdate(row) {
-      console.log(row);
     },
     // 选中图标
     selected(name) {

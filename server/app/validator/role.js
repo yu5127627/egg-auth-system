@@ -3,6 +3,7 @@ module.exports = app => {
 
   const create = Joi.object().keys({
     name: Joi.string().required().error(new Error('角色名称必填')),
+    desc: Joi.string().default(''),
   });
 
   const index = Joi.object().keys({
@@ -13,10 +14,12 @@ module.exports = app => {
   const update = Joi.object().keys({
     id: Joi.number().required().error(new Error('角色id必填')),
     name: Joi.string().required().error(new Error('角色名称必填')),
+    desc: Joi.string().default(''),
   });
 
   const remove = Joi.object().keys({
-    id: Joi.number().required().error(new Error('角色id必填')),
+    ids: Joi.array().min(1).required()
+      .error(new Error('菜单id数组不得为空')),
   });
 
   return {

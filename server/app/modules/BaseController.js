@@ -69,7 +69,7 @@ class BaseController extends Controller {
 
   // 所有查询
   async list () {
-    const result = await this.OpService.list(this.ctx.query);
+    const result = await this.OpService.list(this.ctx.query, null);
     this.ctx.resBody({ result });
   }
 
@@ -92,7 +92,6 @@ class BaseController extends Controller {
       await this.entity.destroy({ where: { id: ids } });
     } else {
       await this.entity.destroy({ where: { id: this.ctx.request.body.ids } });
-
     }
     this.ctx.resBody();
   }

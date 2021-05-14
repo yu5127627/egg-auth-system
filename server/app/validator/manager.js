@@ -6,8 +6,8 @@ module.exports = app => {
     password: Joi.string().min(6).max(16)
       .error(new Error('密码必填')),
     roleId: Joi.number().required().error(new Error('必须关联一个角色')),
-    avatar: Joi.string().default('https://img2.baidu.com/it/u=1322999984,1933233612&fm=15&fmt=auto&gp=0.jpg'),
-    nickname: Joi.string().default('一号用户'),
+    avatar: Joi.string().default('/upload/avatar.gif'),
+    nickname: Joi.string().default(`用户_${Date.now()}`),
   });
 
   const index = Joi.object().keys({
@@ -24,7 +24,8 @@ module.exports = app => {
   });
 
   const remove = Joi.object().keys({
-    id: Joi.number().required().error(new Error('角色id不存在')),
+    ids: Joi.array().min(1).required()
+      .error(new Error('管理员id数组不得为空')),
   });
 
   return {

@@ -66,6 +66,9 @@ service.interceptors.response.use(
       case 404:
         message = "接口地址错误！";
         break;
+      case 422:
+        message = error.response.data.message || "参数错误!";
+        break;
     }
     Message({
       message,

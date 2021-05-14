@@ -9,6 +9,6 @@ module.exports = app => {
   router.get('/api/manager/list', manager.list);
   router.post('/api/manager', manager.create);
   router.put('/api/manager/:id', manager.update);
-  router.delete('/api/manager/:id', manager.remove);
+  router.delete('/api/manager', manager.remove);
   router.get('/api/manager/:id', manager.item);
 };

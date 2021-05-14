@@ -39,6 +39,7 @@ const mergeMenus = (menu) => {
           component: Layout,
           hidden: !item.show,
           alwaysShow: true,
+          // redirect: "noRedirect",
           meta: {
             title: item.title,
             icon: item.icon,

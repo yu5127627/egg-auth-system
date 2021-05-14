@@ -3,32 +3,12 @@
     <!-- 操作栏 -->
     <div class="main-operate">
       <div>
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="()=>{dialog.show=true;}">新增</el-button>
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="openDialog">新增</el-button>
         <el-button type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
       </div>
       <div>
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click="fetchData">刷新</el-button>
       </div>
-    </div>
-
-    <!-- 工具 筛选栏 -->
-    <div class="main-toolbar">
-      <el-form
-        :model="listQuery"
-        label-width="100px"
-        inline
-        class="demo-ruleForm"
-      >
-        <el-form-item label="条件一">
-          <el-input v-model="listQuery.input" placeholder="" />
-        </el-form-item>
-        <el-form-item label="条件二">
-          <el-select v-model="listQuery" placeholder="">
-            <el-option label="区域一" value="shanghai" />
-            <el-option label="区域二" value="beijing" />
-          </el-select>
-        </el-form-item>
-      </el-form>
     </div>
 
     <!-- 主要内容 -->
@@ -36,17 +16,12 @@
       <el-table :data="list" border style="width: 100%" @selection-change="(selection)=>{selectList = selection.map(item=>item.id)}">
         <el-table-column type="selection" />
         <el-table-column prop="id" label="ID" width="50px" align="center" />
-        <el-table-column prop="name" label="角色名称" align="center" />
+        <el-table-column prop="name" label="名称" align="center" />
         <el-table-column prop="desc" label="描述" align="center" />
-        <el-table-column prop="createdAt" label="创建时间" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.createdAt|moment('YYYY-MM-DD HH:mm:ss') }}
-          </template>
-        </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" @click="()=>{dialog.show=true;dialogForm = scope.row;}">编辑</el-button>
-            <el-button type="danger" @click="handleRemove(scope.row)">删除</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -63,39 +38,36 @@
 
     <!-- 新增/编辑 弹出框 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialog.show">
-      <el-form :model="dialogForm" :rules="dialog.rules" label-width="120px">
-        <el-form-item label="活动名称" prop="name">
-          <el-input v-model="dialogForm.name" autocomplete="off" />
+      <el-form :model="dialogForm" :rules="dialog.rules" label-width="90px">
+        <el-form-item label="角色名称" prop="name">
+          <el-input v-model="dialogForm.name" />
         </el-form-item>
-        <el-form-item label="活动区域" prop="">
-          <el-select v-model="dialogForm.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai" />
-            <el-option label="区域二" value="beijing" />
-          </el-select>
+        <el-form-item label="角色描述" prop="">
+          <el-input v-model="dialogForm.desc" type="textarea" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialog.show = false">取 消</el-button>
-        <el-button type="primary" @click="dialog.show = false">确 定</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList } from "@/api/role";
+import { getList, update, create, remove } from "@/api/role";
+const defaultForm = JSON.stringify({ name: "", desc: "" });
 export default {
   name: "",
   data() {
     return {
-      dialogForm: {},
+      dialogForm: JSON.parse(defaultForm),
       dialog: {
         show: false, title: null,
-        rules: { name: [{ required: true, message: "必填" }] }
+        rules: { name: [{ required: true, message: "角色名称不得为空", trigger: "blur" }] }
       },
       limits: [10, 20, 50, 100],
       listQuery: { page: 1, count: 0, limit: 10 },
-      rules: {},
       list: [],
       selectList: []
     };
@@ -103,26 +75,44 @@ export default {
   computed: { dialogTitle() { return this.dialogForm.id ? "编辑" : "创建"; } },
   async created() { await this.fetchData(); },
   methods: {
+    openDialog(row) {
+      this.dialogForm = row.id ? row : JSON.parse(defaultForm);
+      this.dialog.show = true;
+    },
+    async handleSubmit() {
+      const { code, message } = this.dialogForm.id ? await update(this.dialogForm.id, this.dialogForm) : await create(this.dialogForm);
+      if (code === 200) {
+        this.$message({
+          message: message,
+          type: "success"
+        });
+        this.dialog.show = false;
+        this.dialogForm = JSON.parse(defaultForm);
+        await this.fetchData();
+      }
+    },
     async fetchData() {
       const { code, message, result } = await getList(this.listQuery);
       this.list = result.rows;
       this.listQuery.count = result.count;
     },
-    handleCreate() {},
     handleRemove(row) {
-      let ids;
-      if (row.id) {
-        ids = [row.id];
-      } else {
-        ids = this.selectList;
-      }
-      console.log(ids);
+      const ids = row.id ? [row.id] : this.selectList;
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async(res) => {
+        await remove({ ids });
+        await this.fetchData();
+        this.message({
+          type: "success",
+          message: "删除成功!"
+        });
+      });
     },
     handleSearch() {
       console.log(this.listQuery);
-    },
-    handleUpdate(row) {
-      console.log(row);
     }
   }
 };
