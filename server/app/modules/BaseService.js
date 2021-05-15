@@ -22,7 +22,6 @@ class BaseService extends Service {
   async list(where, option) {
     const filter = where ? { where } : {};
     option ? Object.assign(filter, option) : null;
-    console.log(filter);
     return await this.entity.findAll(filter);
   }
 

@@ -1,4 +1,4 @@
-import router, { constantRoutes } from "@/router";
+import { constantRoutes } from "@/router";
 import { getAllList } from "@/api/menu";
 import Layout from "@/layout";
 
@@ -39,7 +39,7 @@ const mergeMenus = (menu) => {
           component: Layout,
           hidden: !item.show,
           alwaysShow: true,
-          // redirect: "noRedirect",
+          redirect: "noRedirect",
           meta: {
             title: item.title,
             icon: item.icon,
@@ -73,21 +73,47 @@ const mergeMenus = (menu) => {
   return pmenu;
 };
 
+const mergeMenu = (pid, menu) => {
+  const children = [];
+  menu.forEach(item => {
+    if (item.pid === pid) {
+      const currentChild = mergeMenu(item.id, menu);
+      if (currentChild.length > 0) {
+        item.children = currentChild;
+      }
+      children.push(item);
+    }
+  });
+  return children;
+};
+
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  menuList: []
+};
+
+const getters = {
+  MENU_LIST(state) {
+    return state.menuList;
+  }
 };
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes;
     state.routes = constantRoutes.concat(routes);
+  },
+  SET_MENUS_LIST: (state, menus) => {
+    state.menuList = mergeMenu(0, menus);
   }
 };
 
 const actions = {
   async asyncMenus({ commit }) {
     const { result } = await getAllList();
+    result.sort((a, b) => a.sort - b.sort);
+    commit("SET_MENUS_LIST", JSON.parse(JSON.stringify(result)));
     const routes = mergeMenus(result);
     commit("SET_ROUTES", routes);
     return routes;
@@ -98,5 +124,6 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters
 };

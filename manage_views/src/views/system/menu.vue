@@ -270,9 +270,6 @@ export default {
         });
       });
     },
-    handleSearch() {
-      console.log(this.listQuery);
-    },
     // 选中图标
     selected(name) {
       this.dialogForm.icon = name;

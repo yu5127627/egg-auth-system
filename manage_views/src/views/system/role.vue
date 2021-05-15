@@ -18,6 +18,11 @@
         <el-table-column prop="id" label="ID" width="50px" align="center" />
         <el-table-column prop="name" label="名称" align="center" />
         <el-table-column prop="desc" label="描述" align="center" />
+        <el-table-column fixed="right" label="资源配置" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" icon="el-icon-menu" @click="openDialogMenu(scope.row)">资源分配</el-button>
+          </template>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
@@ -51,14 +56,23 @@
         <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 权限配置 -->
+    <el-dialog v-if="dialogMenu.show" :title="dialogMenu.title" :visible.sync="dialogMenu.show">
+      <menu-tree :check-menu="dialogMenu.checkMenuIds" @checklist="changeCheck" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList, update, create, remove } from "@/api/role";
+import MenuTree from "@/components/MenuTree";
+import { getList, update, create, remove, setRules, getRules } from "@/api/role";
 const defaultForm = JSON.stringify({ name: "", desc: "" });
 export default {
-  name: "",
+  name: "Role",
+  components: {
+    MenuTree
+  },
   data() {
     return {
       dialogForm: JSON.parse(defaultForm),
@@ -66,15 +80,29 @@ export default {
         show: false, title: null,
         rules: { name: [{ required: true, message: "角色名称不得为空", trigger: "blur" }] }
       },
+      dialogMenu: {
+        show: false, title: "资源分配", id: null, checkMenuIds: []
+      },
       limits: [10, 20, 50, 100],
       listQuery: { page: 1, count: 0, limit: 10 },
       list: [],
       selectList: []
     };
   },
-  computed: { dialogTitle() { return this.dialogForm.id ? "编辑" : "创建"; } },
-  async created() { await this.fetchData(); },
+  computed: {
+    dialogTitle() { return this.dialogForm.id ? "编辑" : "创建"; }
+  },
+  async created() {
+    await this.fetchData();
+  },
   methods: {
+    async changeCheck(list) {
+      const { code, message } = await setRules(this.dialogMenu.id, { menuIds: list });
+      if (code === 200) {
+        this.$message({ message, type: "success" });
+        this.dialogMenu.show = false;
+      }
+    },
     openDialog(row) {
       this.dialogForm = row.id ? row : JSON.parse(defaultForm);
       this.dialog.show = true;
@@ -111,8 +139,11 @@ export default {
         });
       });
     },
-    handleSearch() {
-      console.log(this.listQuery);
+    async openDialogMenu(row) {
+      const { result } = await getRules(row.id);
+      this.dialogMenu.checkMenuIds = result;
+      this.dialogMenu.id = row.id;
+      this.dialogMenu.show = true;
     }
   }
 };

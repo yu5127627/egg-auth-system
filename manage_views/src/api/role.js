@@ -39,3 +39,18 @@ export const remove = (data) => {
     data
   });
 };
+
+export const setRules = (id, data) => {
+  return request({
+    url: `/${MODULE}/rule/${id}`,
+    method: "post",
+    data
+  });
+};
+
+export const getRules = (id) => {
+  return request({
+    url: `/${MODULE}/rule/${id}`,
+    method: "get"
+  });
+};

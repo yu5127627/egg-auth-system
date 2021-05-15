@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <video class="bg-video" src="../../assets/video.mp4" loop="loop" autoplay="autoplay" />
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -54,9 +55,9 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >Login</el-button>
+      >登录</el-button>
 
-      <div class="tips">
+      <div v-if="false" class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: 123456</span>
       </div>
@@ -204,13 +205,23 @@ $light_gray: #eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .bg-video{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 450px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
     overflow: hidden;
   }
 

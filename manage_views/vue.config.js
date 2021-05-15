@@ -9,7 +9,7 @@ function resolve(dir) {
 const name = defaultSettings.title || "vue Admin Template"; // page title
 
 const port = process.env.PORT || 9528; // dev port
-console.log(process.env.NODE_ENV === "development");
+console.log(process.env.NODE_ENV);
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
