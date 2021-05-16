@@ -13,9 +13,6 @@ module.exports = {
   //  创建加密token
   createToken(data, secret) {
     return jwt.sign(
-      { id: data }, secret,
-      {
-        expiresIn: 60 * 60,
-      });
+      { id: data }, secret);
   },
 };

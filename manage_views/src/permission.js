@@ -32,9 +32,10 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch("user/getInfo");
-          const routes = await store.dispatch("permission/asyncMenus");
-          router.addRoutes(routes);
+          const menus = await store.dispatch("user/getInfo");
+          await store.commit("permission/SET_MENUS_LIST", menus);
+          await store.commit("permission/SET_ROUTES", menus);
+
           await store.dispatch("user/getRole");
           next({ ...to, replace: true });
         } catch (error) {

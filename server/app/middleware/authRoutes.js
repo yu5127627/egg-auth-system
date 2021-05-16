@@ -1,4 +1,4 @@
-const whitelist = ['/api/auth/login', '/api/auth/success', '/api/auth/failure'];
+const whitelist = ['/api/auth/login'];
 
 // 全局路由验证中间件
 module.exports = () => {
@@ -7,14 +7,13 @@ module.exports = () => {
     if (whitelist.includes(url)) {
       await next();
     } else {
-      const token = ctx.headers.authorization;
-      const payload = ctx.helper.verifyToken(token, ctx.app.config.jwtTokenSecret);
+      const payload = await ctx.app.redis.get(`eggAuth:token:${ctx.headers.authorization}`);
       if (payload === null) {
         ctx.status = 401;
         ctx.resBody({ code: 401, message: '无权访问' });
       } else {
-        const { dataValues: { password, createdAt, updatedAt, username, ...result } } = await ctx.model.SysManager.findByPk(payload.id);
-        ctx.user = result;
+        ctx.payload = JSON.parse(payload);
+        ctx.payload.user.password = null;
         await next();
       }
     }

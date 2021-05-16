@@ -146,3 +146,23 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, " ");
   }
 }
+
+/**
+ * 递归合并菜单
+ * @param { number } pid  父id
+ * @param { array } menu  要筛选的菜单列表
+ * @returns
+ */
+export const mergeMenu = (pid, menu) => {
+  const children = [];
+  menu.forEach(item => {
+    if (item.pid === pid) {
+      const currentChild = mergeMenu(item.id, menu);
+      if (currentChild.length > 0) {
+        item.children = currentChild;
+      }
+      children.push(item);
+    }
+  });
+  return children;
+};

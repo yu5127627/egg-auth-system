@@ -92,7 +92,7 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="dialogForm.password" type="password" />
         </el-form-item>
-        <el-form-item label="密码" prop="">
+        <el-form-item label="角色" prop="">
           <el-select v-model="dialogForm.roleId" placeholder="请选择">
             <el-option
               v-for="item in roles"

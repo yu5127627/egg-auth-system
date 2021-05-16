@@ -1,22 +1,8 @@
-import { constantRoutes } from "@/router";
-import { getAllList } from "@/api/menu";
+import router, { constantRoutes } from "@/router";
 import Layout from "@/layout";
+import { mergeMenu } from "@/utils";
 
-const filterMenus = (pid, child) => {
-  const cmenu = [];
-  child.forEach(item => {
-    if (item.pid === pid) {
-      const children = filterMenus(item.id, child);
-      if (children.length > 0) {
-        child.children = children;
-      }
-      cmenu.push(item);
-    }
-  });
-  return cmenu;
-};
-
-const mergeMenus = (menu) => {
+const mergeRoutes = (menu) => {
   // 过滤出目录菜单
   const pmenu = [];
   const child = [];
@@ -47,7 +33,7 @@ const mergeMenus = (menu) => {
           }
         });
       }
-    } else {
+    } else if (item.type !== 2) {
       child.push({
         id: item.id,
         pid: item.pid,
@@ -64,27 +50,13 @@ const mergeMenus = (menu) => {
     }
   });
   pmenu.forEach(item => {
-    const children = filterMenus(item.id, child);
+    const children = mergeMenu(item.id, child);
     if (children.length > 0) {
       item.children = children;
     }
   });
   pmenu.push({ path: "*", redirect: "/404", hidden: true });
   return pmenu;
-};
-
-const mergeMenu = (pid, menu) => {
-  const children = [];
-  menu.forEach(item => {
-    if (item.pid === pid) {
-      const currentChild = mergeMenu(item.id, menu);
-      if (currentChild.length > 0) {
-        item.children = currentChild;
-      }
-      children.push(item);
-    }
-  });
-  return children;
 };
 
 const state = {
@@ -94,30 +66,24 @@ const state = {
 };
 
 const getters = {
-  MENU_LIST(state) {
-    return state.menuList;
-  }
+  MENU_LIST: state => state.menuList
 };
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
+    routes = mergeRoutes(routes);
     state.addRoutes = routes;
     state.routes = constantRoutes.concat(routes);
+    router.addRoutes(routes);
   },
   SET_MENUS_LIST: (state, menus) => {
+    menus = JSON.parse(JSON.stringify(menus));
     state.menuList = mergeMenu(0, menus);
   }
 };
 
 const actions = {
-  async asyncMenus({ commit }) {
-    const { result } = await getAllList();
-    result.sort((a, b) => a.sort - b.sort);
-    commit("SET_MENUS_LIST", JSON.parse(JSON.stringify(result)));
-    const routes = mergeMenus(result);
-    commit("SET_ROUTES", routes);
-    return routes;
-  }
+
 };
 
 export default {

@@ -9,7 +9,7 @@ class ManagerController extends BaseController {
   }
 
   info () {
-    this.ctx.resBody({ result: this.ctx.user });
+    this.ctx.resBody({ result: this.ctx.payload });
   }
 
   async index() {
