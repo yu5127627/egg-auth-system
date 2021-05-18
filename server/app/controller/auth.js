@@ -12,8 +12,13 @@ class AuthClass extends BaseController {
     const content = {
       user: ctx.user, role: role.dataValues, rules: [...new Set(rules)], menus: menu.map(item => item.dataValues),
     };
-    await this.app.redis.set(`eggAuth:token:${token}`, JSON.stringify(content), 'EX', 3600);
+    await this.app.redis.set(`eggAuth:token:${ctx.user.id}`, JSON.stringify(content), 'EX', 3600);
     this.ctx.resBody({ result: { token } });
+  }
+
+  async logout(ctx) {
+    await this.app.redis.del(`eggAuth:token:${ctx.payload.user.id}`);
+    this.ctx.resBody();
   }
 }
 

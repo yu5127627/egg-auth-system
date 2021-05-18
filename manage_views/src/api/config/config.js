@@ -70,11 +70,13 @@ service.interceptors.response.use(
         message = error.response.data.message || "参数错误!";
         break;
     }
-    Message({
-      message,
-      type: "error",
-      duration: 5 * 1000
-    });
+    setTimeout(() => {
+      Message({
+        message,
+        type: "error",
+        duration: 5 * 1000
+      });
+    }, 100);
     return Promise.reject(null);
   }
 );

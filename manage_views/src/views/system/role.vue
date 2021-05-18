@@ -110,6 +110,7 @@ export default {
     async handleSubmit() {
       const { code, message } = this.dialogForm.id ? await update(this.dialogForm.id, this.dialogForm) : await create(this.dialogForm);
       if (code === 200) {
+        await this.$store.dispatch("user/getRole");
         this.$message({
           message: message,
           type: "success"
@@ -133,6 +134,7 @@ export default {
       }).then(async(res) => {
         await remove({ ids });
         await this.fetchData();
+        await this.$store.dispatch("user/getRole");
         this.message({
           type: "success",
           message: "删除成功!"

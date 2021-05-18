@@ -110,6 +110,11 @@ export default {
       immediate: true
     }
   },
+  created() {
+    if (this.$store.state.user.menus !== "") {
+      location.reload();
+    }
+  },
   methods: {
     ...mapMutations(["SET_TOKEN"]),
     showPwd() {

@@ -1,4 +1,4 @@
-import { getInfo } from "@/api/auth";
+import { getInfo, logout } from "@/api/auth";
 import { getAllList } from "@/api/role";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 import router from "@/router";
@@ -69,6 +69,10 @@ const actions = {
     const { code, result } = await getAllList();
     commit("SET_ROLES", result);
     return result;
+  },
+  async logout({ commit }) {
+    await logout();
+    commit("RESET_TOKEN");
   }
 };
 

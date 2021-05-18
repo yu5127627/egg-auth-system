@@ -3,7 +3,7 @@ module.exports = app => {
 
   const create = Joi.object().keys({
     name: Joi.string().required().error(new Error('角色名称必填')),
-    desc: Joi.string().default(''),
+    desc: Joi.string().empty(''),
   });
 
   const index = Joi.object().keys({

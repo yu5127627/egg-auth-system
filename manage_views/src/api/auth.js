@@ -8,6 +8,13 @@ export const login = (data) => {
   });
 };
 
+export const logout = () => {
+  return request({
+    url: "/auth/logout",
+    method: "get"
+  });
+};
+
 export const getInfo = () => {
   return request({
     url: "/manager/info",

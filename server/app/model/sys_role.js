@@ -12,6 +12,7 @@ module.exports = app => {
     desc: {
       type: STRING,
       comment: '角色介绍',
+      defaultValue: '',
     },
   }, {
     tableName: 'sys_role',
