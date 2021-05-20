@@ -1,5 +1,4 @@
 import { getInfo, logout } from "@/api/auth";
-import { getAllList } from "@/api/role";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 import router from "@/router";
 
@@ -10,8 +9,7 @@ const getDefaultState = () => {
     menus: "",
     role: "",
     name: "",
-    avatar: "",
-    roles: null
+    avatar: ""
   };
 };
 
@@ -34,9 +32,6 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar;
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles;
   },
   SET_MENUS: (state, menus) => {
     state.menus = menus;
@@ -64,11 +59,6 @@ const actions = {
       commit("RESET_TOKEN");
       router.push({ path: `/login?redirect=${router.currentRoute.path}` });
     }
-  },
-  async getRole({ commit }) {
-    const { code, result } = await getAllList();
-    commit("SET_ROLES", result);
-    return result;
   },
   async logout({ commit }) {
     await logout();

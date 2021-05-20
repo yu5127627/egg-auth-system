@@ -113,8 +113,7 @@
 
 <script>
 import { getList, update, create, remove } from "@/api/manager";
-import { createNamespacedHelpers } from "vuex";
-const { mapState } = createNamespacedHelpers("user");
+import { getAllList } from "@/api/role";
 const defaultForm = JSON.stringify({
   username: "", password: "", roleId: ""
 });
@@ -137,15 +136,17 @@ export default {
       limits: [10, 20, 50, 100],
       listQuery: { page: 1, count: 0, limit: 10 },
       list: [],
-      selectList: []
+      selectList: [],
+      roles: []
     };
   },
   computed: {
-    ...mapState(["roles"]),
     dialogTitle() { return this.dialogForm.id ? "编辑" : "创建"; }
   },
   async created() {
     await this.fetchData();
+    const { result } = await getAllList();
+    this.roles = result;
   },
   methods: {
     filterRole(id) {

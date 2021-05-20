@@ -35,8 +35,6 @@ router.beforeEach(async(to, from, next) => {
           const menus = await store.dispatch("user/getInfo");
           await store.commit("permission/SET_MENUS_LIST", menus);
           await store.commit("permission/SET_ROUTES", menus);
-
-          await store.dispatch("user/getRole");
           next({ ...to, replace: true });
         } catch (error) {
           // remove token and go to login page to re-login
