@@ -2,6 +2,7 @@ import Vue from "vue";
 import "normalize.css/normalize.css"; // A modern alternative to CSS resets
 import "./plugins";
 import "./filters";
+import "./directive";
 
 import "@/styles/index.scss"; // global css
 import "@/assets/icons"; // icon

@@ -3,7 +3,7 @@
     <!-- 操作栏 -->
     <div class="main-operate">
       <div>
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="openDialog">新增</el-button>
+        <el-button v-rule="'manager:create'" type="primary" icon="el-icon-circle-plus-outline" @click="openDialog">新增</el-button>
         <el-button type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
       </div>
       <div>
