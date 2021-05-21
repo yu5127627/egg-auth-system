@@ -166,3 +166,14 @@ export const mergeMenu = (pid, menu) => {
   });
   return children;
 };
+
+export const filterMenu = (pid, menu) => {
+  const children = [];
+  menu.forEach(item => {
+    if (item.pid === pid) {
+      const currentChild = filterMenu(item.id, menu);
+      children.push(item, ...currentChild);
+    }
+  });
+  return children;
+};

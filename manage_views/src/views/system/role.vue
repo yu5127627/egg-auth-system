@@ -57,7 +57,7 @@
       </div>
     </el-dialog>
 
-    <!-- 权限配置 -->
+    <!-- 资源配置 -->
     <el-dialog v-if="dialogMenu.show" :title="dialogMenu.title" :visible.sync="dialogMenu.show">
       <menu-tree :check-menu="dialogMenu.checkMenuIds" @checklist="changeCheck" />
     </el-dialog>

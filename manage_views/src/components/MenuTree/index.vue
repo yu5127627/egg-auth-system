@@ -5,8 +5,10 @@
       :data="MENU_LIST"
       show-checkbox
       node-key="id"
+      check-strictly
       :default-checked-keys="checklist"
       :props="defaultProps"
+      @check="menuChange"
     />
     <div class="opera">
       <el-button type="primary" @click="getCurrentKey">保存</el-button>
@@ -17,6 +19,8 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("permission");
+const { mapState } = createNamespacedHelpers("user");
+import { filterMenu } from "@/utils";
 export default {
   name: "MenuTree",
   props: {
@@ -35,11 +39,34 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["MENU_LIST"])
+    ...mapGetters(["MENU_LIST"]),
+    ...mapState(["menus"])
   },
   methods: {
     getCurrentKey() {
       this.$emit("checklist", this.$refs.menuTree.getCheckedKeys());
+    },
+    menuChange(menu) {
+      let index = this.checklist.indexOf(menu.id);
+      const childIds = filterMenu(menu.id, this.menus).map(item => item.id);
+      if (index !== -1) {
+        this.checklist.splice(index, 1);
+        childIds.forEach(item => {
+          index = this.checklist.indexOf(item);
+          if (index !== -1) {
+            this.checklist.splice(index, 1);
+          }
+        });
+      } else {
+        this.checklist.push(menu.id);
+        childIds.forEach(item => {
+          index = this.checklist.indexOf(item);
+          if (index === -1) {
+            this.checklist.push(item);
+          }
+        });
+      }
+      this.$refs.menuTree.setCheckedKeys(this.checklist);
     }
   }
 };
