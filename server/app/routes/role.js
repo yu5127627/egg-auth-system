@@ -3,7 +3,7 @@
 module.exports = app => {
   const { router, controller: { role }, middleware: { authRules } } = app;
 
-  router.get('/api/role', authRules(['role:list']), role.index);
+  router.get('/api/role', authRules(['role:list']), role.page);
   router.get('/api/role/list', authRules(['role:list']), role.list);
   router.post('/api/role', authRules(['role:create']), role.create);
   router.delete('/api/role', authRules(['role:delete']), role.remove);

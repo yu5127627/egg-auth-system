@@ -12,10 +12,13 @@ class ManagerController extends BaseController {
     this.ctx.resBody({ result: this.ctx.payload });
   }
 
-  async index() {
-    this.ctx.validate(this.app.validator[this.MODULE_KEY].index, this.ctx.request.query, { stripUnknown: true });
+  async page() {
+    this.ctx.validate(this.app.validator[this.MODULE_KEY].page, this.ctx.request.query, { stripUnknown: true });
     let { limit, page, nickname, username, roleId } = this.ctx.request.query;
-    const where = {};
+    const roleList = await this.service.role.list();
+    const where = {
+      roleId: roleList.map(item => item.id),
+    };
     roleId ? where.roleId = roleId : null;
     nickname ? where.nickname = { [Op.like]: `%${nickname}%` } : null;
     username ? where.username = { [Op.like]: `%${username}%` } : null;

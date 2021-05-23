@@ -43,9 +43,9 @@ class BaseController extends Controller {
   }
 
   // 分页查询
-  async index () {
-    if (this.app.validator[this.MODULE_KEY] && this.app.validator[this.MODULE_KEY].index) {
-      this.ctx.validate(this.app.validator[this.MODULE_KEY].index, this.ctx.request.query, { stripUnknown: true });
+  async page () {
+    if (this.app.validator[this.MODULE_KEY] && this.app.validator[this.MODULE_KEY].page) {
+      this.ctx.validate(this.app.validator[this.MODULE_KEY].page, this.ctx.request.query, { stripUnknown: true });
     }
     const where = {};
     const option = {};

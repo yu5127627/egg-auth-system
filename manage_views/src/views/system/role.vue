@@ -17,6 +17,7 @@
         <el-table-column type="selection" />
         <el-table-column prop="id" label="ID" width="50px" align="center" />
         <el-table-column prop="name" label="名称" align="center" />
+        <el-table-column prop="level" label="级别" align="center" />
         <el-table-column prop="desc" label="描述" align="center" />
         <el-table-column fixed="right" label="资源配置" align="center">
           <template slot-scope="scope">
@@ -26,7 +27,7 @@
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
-            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
+            <el-button type="danger" :disabled="scope.row.level===0||scope.row.id===1?true:false" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -46,6 +47,9 @@
       <el-form :model="dialogForm" :rules="dialog.rules" label-width="90px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="dialogForm.name" />
+        </el-form-item>
+        <el-form-item label="角色级别" prop="level">
+          <el-input-number v-model="dialogForm.level" :min="1" label="角色级别" />
         </el-form-item>
         <el-form-item label="角色描述" prop="">
           <el-input v-model="dialogForm.desc" type="textarea" />
@@ -67,7 +71,7 @@
 <script>
 import MenuTree from "@/components/MenuTree";
 import { getList, update, create, remove, setRules, getRules } from "@/api/role";
-const defaultForm = JSON.stringify({ name: "", desc: "" });
+const defaultForm = JSON.stringify({ name: "", desc: "", level: "" });
 export default {
   name: "Role",
   components: {
@@ -78,7 +82,10 @@ export default {
       dialogForm: JSON.parse(defaultForm),
       dialog: {
         show: false, title: null,
-        rules: { name: [{ required: true, message: "角色名称不得为空", trigger: "blur" }] }
+        rules: {
+          name: [{ required: true, message: "角色名称不得为空", trigger: "blur" }],
+          level: [{ required: true, message: "角色级别必填", trigger: "blur" }]
+        }
       },
       dialogMenu: {
         show: false, title: "资源分配", id: null, checkMenuIds: []

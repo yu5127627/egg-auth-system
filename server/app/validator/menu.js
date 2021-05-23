@@ -15,7 +15,7 @@ module.exports = app => {
     type: Joi.number().empty(''),
   });
 
-  const index = Joi.object().keys({
+  const page = Joi.object().keys({
     page: Joi.number().default(1),
     limit: Joi.number().default(20),
   });
@@ -49,7 +49,7 @@ module.exports = app => {
 
   return {
     create,
-    index,
+    page,
     update,
     item,
     remove,

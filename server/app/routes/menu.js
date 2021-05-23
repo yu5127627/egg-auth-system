@@ -1,7 +1,7 @@
 module.exports = app => {
   const { router, controller: { menu }, middleware: { authRules } } = app;
 
-  router.get('/api/menu', authRules(['menu:list']), menu.index);
+  router.get('/api/menu', authRules(['menu:list']), menu.page);
   router.get('/api/menu/list', authRules(['menu:list']), menu.list);
   router.post('/api/menu', authRules(['menu:create']), menu.create);
   router.delete('/api/menu', authRules(['menu:delete']), menu.remove);

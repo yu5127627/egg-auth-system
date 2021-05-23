@@ -3,10 +3,11 @@ module.exports = app => {
 
   const create = Joi.object().keys({
     name: Joi.string().required().error(new Error('角色名称必填')),
+    level: Joi.number().required().error(new Error('角色级别必填')),
     desc: Joi.string().empty(''),
   });
 
-  const index = Joi.object().keys({
+  const page = Joi.object().keys({
     page: Joi.number().default(1),
     limit: Joi.number().default(20),
   });
@@ -14,6 +15,7 @@ module.exports = app => {
   const update = Joi.object().keys({
     id: Joi.number().required().error(new Error('角色id必填')),
     name: Joi.string().required().error(new Error('角色名称必填')),
+    level: Joi.number().required().error(new Error('角色级别必填')),
     desc: Joi.string().default(''),
   });
 
@@ -24,7 +26,7 @@ module.exports = app => {
 
   return {
     create,
-    index,
+    page,
     update,
     remove,
     item: remove,

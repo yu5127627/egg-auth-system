@@ -15,13 +15,14 @@ class BaseService extends Service {
     return await this.entity.create(body);
   }
 
-  async page (where, option) {
+  async page(where, option) {
     return await this.entity.findAndCountAll({ where, ...option });
   }
 
   async list(where, option) {
     const filter = where ? { where } : {};
     option ? Object.assign(filter, option) : null;
+    console.log(filter);
     return await this.entity.findAll(filter);
   }
 

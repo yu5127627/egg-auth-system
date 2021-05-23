@@ -9,6 +9,12 @@ module.exports = app => {
       comment: '名称',
       allowNull: false,
     },
+    level: {
+      type: INTEGER(10),
+      comment: '角色级别',
+      allowNull: false,
+      defaultValue: 10,
+    },
     desc: {
       type: STRING,
       comment: '角色介绍',

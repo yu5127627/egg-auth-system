@@ -67,7 +67,7 @@ service.interceptors.response.use(
         message = error.response.data.message || "无权访问，请联系管理员！";
         break;
       case 404:
-        message = "接口地址错误！";
+        message = error.response.data.message || "接口地址错误！";
         break;
       case 422:
         message = error.response.data.message || "参数错误!";
