@@ -23,7 +23,7 @@
 
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="'http://localhost:8010'+avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="host+avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -34,7 +34,7 @@
           </router-link>
           <a
             target="_blank"
-            href="https://github.com/PanJiaChen/vue-admin-template/"
+            href="https://github.com/yu5127627/egg-auth-system"
           >
             <el-dropdown-item>Github</el-dropdown-item>
           </a>

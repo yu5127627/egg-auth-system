@@ -62,6 +62,7 @@
         <span> password: 123456</span>
       </div>
     </el-form>
+    <div class="mark">{{ mark }}</div>
   </div>
 </template>
 
@@ -69,10 +70,12 @@
 import { login } from "@/api/auth.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapMutations } = createNamespacedHelpers("user");
+import { mark } from "@/settings";
 export default {
   name: "Login",
   data() {
     return {
+      mark,
       loginForm: {
         username: "ykn",
         password: "123456"
@@ -130,19 +133,23 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.loading = true;
-          const { code, message, result } = await login(this.loginForm);
-          if (code === 200) {
-            this.$message({
-              message,
-              type: "success"
-            });
-            this.SET_TOKEN(result.token);
-            this.$router.push({ path: "/dashboard" });
-          } else {
-            this.$message.error(message);
+          try {
+            this.loading = true;
+            const { code, message, result } = await login(this.loginForm);
+            if (code === 200) {
+              this.$message({
+                message,
+                type: "success"
+              });
+              this.SET_TOKEN(result.token);
+              this.$router.push({ path: "/dashboard" });
+            } else {
+              this.$message.error(message);
+            }
+            this.loading = false;
+          } catch (error) {
+            this.loading = false;
           }
-          this.loading = false;
         } else {
           console.log("error submit!!");
           return false;
@@ -193,10 +200,22 @@ $cursor: #fff;
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    // background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
   }
+}
+
+.mark{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 12px;
+   color: #999;
 }
 </style>
 
@@ -208,7 +227,7 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
   display: flex;
   align-items: center;

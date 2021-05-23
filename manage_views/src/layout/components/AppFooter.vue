@@ -1,12 +1,18 @@
 <template>
   <div class="app-footer">
-    <div class="mark">防伪</div>
+    <div class="mark">{{ mark }}</div>
   </div>
 </template>
 
 <script>
+import { mark } from "@/settings";
 export default {
-  name: "AppFooter"
+  name: "AppFooter",
+  data() {
+    return {
+      mark
+    };
+  }
 };
 </script>
 

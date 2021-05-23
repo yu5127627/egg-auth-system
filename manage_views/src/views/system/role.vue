@@ -3,8 +3,8 @@
     <!-- 操作栏 -->
     <div class="main-operate">
       <div>
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="openDialog">新增</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
+        <el-button v-rule="'role:create'" type="primary" icon="el-icon-circle-plus-outline" @click="openDialog">新增</el-button>
+        <el-button v-rule="'role:delete'" type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
       </div>
       <div>
         <el-button type="primary" icon="el-icon-refresh" @click="fetchData">刷新</el-button>
@@ -21,13 +21,13 @@
         <el-table-column prop="desc" label="描述" align="center" />
         <el-table-column fixed="right" label="资源配置" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-menu" @click="openDialogMenu(scope.row)">资源分配</el-button>
+            <el-button v-rule="'role:update'" type="primary" size="mini" icon="el-icon-menu" @click="openDialogMenu(scope.row)">资源分配</el-button>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
-            <el-button type="danger" :disabled="scope.row.level===0||scope.row.id===1?true:false" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
+            <el-button v-rule="'role:update'" type="primary" size="mini" icon="el-icon-edit" @click="openDialog(scope.row)" />
+            <el-button v-rule="'role:delete'" type="danger" :disabled="scope.row.level===0||scope.row.id===1?true:false" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
           </template>
         </el-table-column>
       </el-table>

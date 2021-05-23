@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { title } from "@/settings";
 export default {
   name: "SidebarLogo",
   props: {
@@ -29,7 +30,7 @@ export default {
   },
   data() {
     return {
-      title: "Egg.js 权限管理",
+      title: title,
       logo: require("@/assets/images/logo.png")
     };
   }

@@ -3,7 +3,7 @@
     <!-- 操作栏 -->
     <div class="main-operate">
       <div>
-        <el-button type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
+        <el-button v-rule="'logLogin:delete'" type="danger" icon="el-icon-delete" @click="handleRemove">删除</el-button>
       </div>
       <div>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
@@ -53,7 +53,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
+            <el-button v-rule="'logLogin:delete'" type="danger" size="mini" icon="el-icon-delete" @click="handleRemove(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -76,7 +76,7 @@ export default {
   name: "LoginLog",
   data() {
     return {
-      limits: [10, 20, 50, 100],
+      limits: [10, 15, 20, 50, 100],
       listQuery: { page: 1, count: 0, limit: 10 },
       list: [],
       selectList: []

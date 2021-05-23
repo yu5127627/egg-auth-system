@@ -1,6 +1,8 @@
 module.exports = {
 
-  title: "Egg.js 后台权限管理",
+  title: "Egg.js后台管理模板",
+
+  mark: "备案编号: 晋ICP备19004552号  ©2021 ykn",
 
   /**
    * @type {boolean} true | false
