@@ -27,25 +27,6 @@ module.exports = app => {
       },
       domainWhiteList: ['*'], // []中放放出的白名单，*代表所有
     },
-    sequelize: {
-      dialect: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      database: 'egg_auth',
-      username: 'root',
-      password: '123456',
-      logging: msg => {
-        const sqlLog = path.join(__dirname, '../logs/mysql.dev.sql');
-        if (!fs.existsSync(sqlLog)) {
-          fs.writeFileSync(sqlLog, '', 'utf8');
-        }
-        fs.appendFileSync(sqlLog, '\n' + msg, 'utf8');
-      },
-      timezone: '+08:00',
-      define: {
-        underscored: false,
-      },
-    },
     jwtTokenSecret: 'jiami',
     joi: {
       options: {},
@@ -66,14 +47,6 @@ module.exports = app => {
         { prefix: '/public/', dir: path.join(app.baseDir, 'public') },
         { prefix: '/upload/', dir: path.join(app.baseDir, 'app/public/upload') },
       ],
-    },
-    redis: {
-      client: {
-        port: 6379, // Redis port
-        host: '127.0.0.1', // Redis host
-        password: '',
-        db: 0,
-      },
     },
   };
 
