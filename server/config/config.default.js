@@ -18,6 +18,8 @@ module.exports = app => {
     assets: {
       publicPath: '/public/',
     },
+    proxy: true,
+    maxIpsCount: 1,
     security: {
       csrf: {
         enable: false,

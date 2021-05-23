@@ -11,7 +11,7 @@ module.exports = () => {
       const user = await ctx.app.redis.get(`eggAuth:token:${payload.id}`);
       if (user === null) {
         ctx.status = 401;
-        ctx.resBody({ code: 401, message: '无权访问' });
+        ctx.resBody({ code: 401, message: '无权访问，请联系管理员。' });
       } else {
         ctx.payload = JSON.parse(user);
         ctx.payload.user.password = null;

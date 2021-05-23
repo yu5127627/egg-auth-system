@@ -11,8 +11,8 @@ module.exports = rules => {
       }
     }
     if (disable) {
-      ctx.status = 401;
-      ctx.resBody({ code: 401, message: '无权操作' });
+      ctx.status = 403;
+      ctx.resBody({ code: 403, message: '无权操作,请联系管理员。' });
     } else {
       await next();
     }

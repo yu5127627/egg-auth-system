@@ -187,7 +187,7 @@ export default {
       }).then(async(res) => {
         await remove({ ids });
         await this.fetchData();
-        this.message({
+        this.$message({
           type: "success",
           message: "删除成功!"
         });

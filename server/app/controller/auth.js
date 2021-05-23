@@ -1,5 +1,5 @@
 const BaseController = require('../modules/BaseController');
-
+const parser = require('ua-parser-js');
 class AuthClass extends BaseController {
   async login(ctx) {
     const token = ctx.helper.createToken(ctx.user.id, this.app.config.jwtTokenSecret);
@@ -13,6 +13,9 @@ class AuthClass extends BaseController {
       user: ctx.user, role: role.dataValues, rules: [...new Set(rules)], menus: menu.map(item => item.dataValues),
     };
     await this.app.redis.set(`eggAuth:token:${ctx.user.id}`, JSON.stringify(content), 'EX', 3600);
+    await this.ctx.model.SysManager.updateLogin(ctx.user.id);
+    const ua = parser(ctx.headers['user-agent']);
+    await this.ctx.model.LogLogin.create({ username: ctx.user.username, ip: ctx.ip, address: '', browser: `${ua.os.name}${ua.os.version} / ${ua.browser.name}${ua.browser.version} `, managerId: ctx.user.id });
     this.ctx.resBody({ result: { token } });
   }
 

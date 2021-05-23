@@ -63,6 +63,9 @@ service.interceptors.response.use(
         removeToken();
         location.reload();
         break;
+      case 403:
+        message = error.response.data.message || "无权访问，请联系管理员！";
+        break;
       case 404:
         message = "接口地址错误！";
         break;

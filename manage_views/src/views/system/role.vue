@@ -135,7 +135,7 @@ export default {
         await remove({ ids });
         await this.fetchData();
         await this.$store.dispatch("user/getRole");
-        this.message({
+        this.$message({
           type: "success",
           message: "删除成功!"
         });

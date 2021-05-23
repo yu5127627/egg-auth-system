@@ -5,7 +5,6 @@ module.exports = app => {
     title: Joi.string().required()
       .error(new Error('菜单名称必填')),
     cache: Joi.boolean().default(false),
-    icon: Joi.string().default(''),
     islink: Joi.boolean().default(false),
     name: Joi.string().empty(''),
     path: Joi.string().empty(''),
@@ -14,7 +13,6 @@ module.exports = app => {
     show: Joi.boolean().default(true),
     sort: Joi.number().default(999),
     type: Joi.number().empty(''),
-    url: Joi.string().required().error(new Error('菜单地址不得为空')),
   });
 
   const index = Joi.object().keys({

@@ -13,6 +13,7 @@ module.exports = app => {
     icon: {
       type: STRING(64),
       allowNull: false,
+      defaultValue: '',
       comment: '图标',
     },
     islink: {

@@ -1,7 +1,7 @@
 const { hashSync } = require('bcryptjs');
 
 module.exports = app => {
-  const { STRING, INTEGER } = app.Sequelize;
+  const { STRING, DATE, NOW } = app.Sequelize;
 
   const SysManager = app.model.define('sys_manager', {
     username: {
@@ -27,10 +27,12 @@ module.exports = app => {
       comment: '头像',
       allowNull: false,
     },
+    ctime: { type: DATE, allowNull: false, defaultValue: NOW, comment: '创建时间' },
+    login_time: { type: DATE, allowNull: false, defaultValue: NOW, comment: '登录时间' },
   }, {
     tableName: 'sys_manager',
     freezeTableName: true,
-    timestamps: true,
+    timestamps: false,
   });
 
   SysManager.associate = function () {
@@ -38,6 +40,11 @@ module.exports = app => {
       foreignKey: 'roleId',
       targetKey: 'id',
     });
+  };
+
+  SysManager.updateLogin = async function(id) {
+    const row = await this.findByPk(id);
+    return await row.update({ login_time: Date.now() });
   };
 
   return SysManager;
