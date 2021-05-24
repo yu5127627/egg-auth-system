@@ -10,7 +10,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Egg.js 权限管理</h3>
+        <h3 class="title">{{ title }}</h3>
       </div>
 
       <el-form-item prop="username">
@@ -57,7 +57,7 @@
         @click.native.prevent="handleLogin"
       >登录</el-button>
 
-      <div v-if="false" class="tips">
+      <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: 123456</span>
       </div>
@@ -70,14 +70,14 @@
 import { login } from "@/api/auth.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapMutations } = createNamespacedHelpers("user");
-import { mark } from "@/settings";
+import { mark, title } from "@/settings";
 export default {
   name: "Login",
   data() {
     return {
-      mark,
+      mark, title,
       loginForm: {
-        username: "ykn",
+        username: "test",
         password: "123456"
       },
       loginRules: {
