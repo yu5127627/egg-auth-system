@@ -1,5 +1,5 @@
 
-// 全局路由验证中间件
+// 全局权限验证中间件
 module.exports = rules => {
   return async function (ctx, next) {
     const haveRules = ctx.payload.rules;

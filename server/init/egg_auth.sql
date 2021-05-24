@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50733
 File Encoding         : 65001
 
-Date: 2021-05-24 00:39:28
+Date: 2021-05-24 22:03:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,36 +30,14 @@ CREATE TABLE `log_login` (
   PRIMARY KEY (`id`),
   KEY `managerId` (`managerId`),
   CONSTRAINT `log_login_ibfk_1` FOREIGN KEY (`managerId`) REFERENCES `sys_manager` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of log_login
 -- ----------------------------
-INSERT INTO `log_login` VALUES ('9', 'ykn', '::1', '', 'Windows10/Chrome90.0.4430.93 ', '2021-05-22 12:15:51', '2');
-INSERT INTO `log_login` VALUES ('11', 'admin', '127.0.0.1', '', 'Windows10/Firefox88.0 ', '2021-05-22 12:53:05', '25');
-INSERT INTO `log_login` VALUES ('12', 'admin', '127.0.0.1', '', 'Windows10/Firefox88.0 ', '2021-05-22 12:53:17', '25');
-INSERT INTO `log_login` VALUES ('13', 'ykn', '127.0.0.1', '', 'Windows10/Firefox88.0 ', '2021-05-22 12:54:27', '2');
-INSERT INTO `log_login` VALUES ('14', 'ykn', '::1', '', 'Windows10/Chrome90.0.4430.93 ', '2021-05-22 12:54:32', '2');
-INSERT INTO `log_login` VALUES ('15', 'ykn', '127.0.0.1', '', 'Windows10 / Firefox88.0 ', '2021-05-22 12:56:06', '2');
-INSERT INTO `log_login` VALUES ('16', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.93 ', '2021-05-22 13:08:05', '2');
-INSERT INTO `log_login` VALUES ('17', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 18:39:11', '2');
-INSERT INTO `log_login` VALUES ('18', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 19:41:15', '2');
-INSERT INTO `log_login` VALUES ('19', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 19:45:48', '2');
-INSERT INTO `log_login` VALUES ('20', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 20:22:37', '2');
-INSERT INTO `log_login` VALUES ('21', 'admin', '127.0.0.1', '', 'undefinedundefined / undefinedundefined ', '2021-05-23 20:24:34', '25');
-INSERT INTO `log_login` VALUES ('22', 'admin', '127.0.0.1', '', 'undefinedundefined / undefinedundefined ', '2021-05-23 20:25:09', '25');
-INSERT INTO `log_login` VALUES ('23', 'admin', '127.0.0.1', '', 'undefinedundefined / undefinedundefined ', '2021-05-23 20:25:16', '25');
-INSERT INTO `log_login` VALUES ('24', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:09:39', '2');
-INSERT INTO `log_login` VALUES ('25', 'admin', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:09:55', '25');
-INSERT INTO `log_login` VALUES ('26', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:13:20', '2');
-INSERT INTO `log_login` VALUES ('27', 'admin', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:13:42', '25');
-INSERT INTO `log_login` VALUES ('28', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:16:40', '2');
-INSERT INTO `log_login` VALUES ('29', 'admin', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 21:34:29', '25');
-INSERT INTO `log_login` VALUES ('30', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 23:36:11', '2');
-INSERT INTO `log_login` VALUES ('31', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 23:39:32', '2');
-INSERT INTO `log_login` VALUES ('32', 'ykn', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 23:46:13', '2');
-INSERT INTO `log_login` VALUES ('33', 'superAdmin', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-24 00:35:48', '2');
-INSERT INTO `log_login` VALUES ('34', 'superAdmin', '::1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-24 00:37:16', '2');
+INSERT INTO `log_login` VALUES ('12', 'test', '127.0.0.1', '', 'Windows10/Firefox88.0 ', '2021-05-22 12:53:17', '25');
+INSERT INTO `log_login` VALUES ('21', 'admin', '127.0.0.1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-23 20:24:34', '25')
+INSERT INTO `log_login` VALUES ('33', 'superAdmin', '127.0.0.1', '', 'Windows10 / Chrome90.0.4430.212 ', '2021-05-24 00:35:48', '2');
 
 -- ----------------------------
 -- Table structure for sys_manager
@@ -82,8 +60,8 @@ CREATE TABLE `sys_manager` (
 -- ----------------------------
 -- Records of sys_manager
 -- ----------------------------
-INSERT INTO `sys_manager` VALUES ('2', 'superAdmin', '$2a$10$FN7emWSJCVdDXNAFof.Z5uAni63joiHL6ln7sW91iOIeBr2FjuNJy', '余某人', '/upload/avatar.gif', '1', '0000-00-00 00:00:00', '2021-05-24 00:37:16');
-INSERT INTO `sys_manager` VALUES ('3', 'test', '$2a$10$FN7emWSJCVdDXNAFof.Z5uAni63joiHL6ln7sW91iOIeBr2FjuNJy', '游客', '/upload/avatar.gif', '11', '0000-00-00 00:00:00', '2021-05-22 12:16:30');
+INSERT INTO `sys_manager` VALUES ('2', 'superAdmin', '$2a$10$FN7emWSJCVdDXNAFof.Z5uAni63joiHL6ln7sW91iOIeBr2FjuNJy', '余某人', '/upload/avatar.gif', '1', '0000-00-00 00:00:00', '2021-05-24 22:00:23');
+INSERT INTO `sys_manager` VALUES ('3', 'test', '$2a$10$FN7emWSJCVdDXNAFof.Z5uAni63joiHL6ln7sW91iOIeBr2FjuNJy', '游客', '/upload/avatar.gif', '11', '0000-00-00 00:00:00', '2021-05-24 21:52:44');
 INSERT INTO `sys_manager` VALUES ('25', 'admin', '$2a$10$EIbVRBQWwIsjw/2DrqsYyOUsJQf1yqWXT0ZOFnxb.agmgrXWS8yXa', '用户_1621348724664', '/upload/avatar.gif', '12', '0000-00-00 00:00:00', '2021-05-23 21:34:29');
 
 -- ----------------------------
@@ -210,4 +188,5 @@ INSERT INTO `sys_role_menu` VALUES ('2021-05-18 22:27:11', '2021-05-18 22:27:11'
 INSERT INTO `sys_role_menu` VALUES ('2021-05-21 22:41:03', '2021-05-21 22:41:03', '22', '1');
 INSERT INTO `sys_role_menu` VALUES ('2021-05-18 22:27:11', '2021-05-18 22:27:11', '22', '12');
 INSERT INTO `sys_role_menu` VALUES ('2021-05-23 23:39:05', '2021-05-23 23:39:07', '23', '1');
+INSERT INTO `sys_role_menu` VALUES ('2021-05-24 21:44:56', '2021-05-24 21:44:56', '23', '11');
 INSERT INTO `sys_role_menu` VALUES ('2021-05-23 23:39:14', '2021-05-23 23:39:17', '24', '1');

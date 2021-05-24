@@ -1,4 +1,4 @@
-/* eslint-disable strict */
+// 全局异常处理中间件
 module.exports = () => {
   return async function errorHandler(ctx, next) {
     try {

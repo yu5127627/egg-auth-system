@@ -1,5 +1,6 @@
 const { compareSync } = require('bcryptjs');
 
+// 验证用户名账号密码中间件
 module.exports = () => {
   return async function verifyManager (ctx, next) {
     const { username, password } = ctx.request.body;

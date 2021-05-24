@@ -205,18 +205,6 @@ $cursor: #fff;
     color: #454545;
   }
 }
-
-.mark{
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  font-size: 12px;
-   color: #999;
-}
 </style>
 
 <style lang="scss" scoped>
@@ -290,5 +278,17 @@ $light_gray: #eee;
     cursor: pointer;
     user-select: none;
   }
+
+  .mark{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 12px;
+   color: #999;
+}
 }
 </style>

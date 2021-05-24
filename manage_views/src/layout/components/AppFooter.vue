@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .app-footer{
     height: 40px;
     font-weight: 500;
